@@ -1,26 +1,39 @@
+"""Read car_fleet.csv and print each vehicle's details."""
+
 import csv
 
-myVehicle={
-    "vin":"<empty>",
-    "make":"<empty>",
-    "model":"<empty>",
+# Template showing the fields every vehicle record has.
+vehicle_template = {
+    "vin": "<empty>",
+    "make": "<empty>",
+    "model": "<empty>",
     "year": 0,
-    "range":0,
-    "topSpeed":0,
-    "zeroSixty":0.0,
-    "mileage":0
-    }
-    
-for key,value in myVehicle.items():
-    print("{}:{}".format(key,value))
+    "range": 0,
+    "topSpeed": 0,
+    "zeroSixty": 0.0,
+    "mileage": 0,
+}
 
-with open('car_fleet.csv') as csvFile:
-    csvReader=csv.reader(csvFile,delimiter=',')
-    lineCount=0
-    for row in csvReader:
-        if lineCount==0:
-            print(f'Column names are:{",".join(row)}')
-            lineCount+=1
-        else:
-            print(f'vin:{row[0]} make:{row[1]}, model:{row[2]},year:{row[3]},range:{row[4]},topSpeed:{row[5]},zeroSixty:{row[6]},mileage:{row[7]}')
-            
+print("Vehicle fields:")
+for key, value in vehicle_template.items():
+    print(f"{key}: {value}")
+
+inventory = []
+
+try:
+    with open("car_fleet.csv", newline="") as csv_file:
+        reader = csv.DictReader(csv_file)  # uses the header row as column names
+        print(f"Column names are: {', '.join(reader.fieldnames)}")
+
+        for row in reader:
+            inventory.append(row)
+            print(
+                f"vin: {row['vin']}, make: {row['make']}, model: {row['model']}, "
+                f"year: {row['year']}, range: {row['range']}, "
+                f"topSpeed: {row['topSpeed']}, zeroSixty: {row['zeroSixty']}, "
+                f"mileage: {row['mileage']}"
+            )
+except FileNotFoundError:
+    print("car_fleet.csv was not found. Run this script from the folder that contains it.")
+
+print(f"Loaded {len(inventory)} vehicles.")
