@@ -1,5 +1,4 @@
 import csv
-import copy
 
 myVehicle={
     "vin":"<empty>",
@@ -17,7 +16,7 @@ for key,value in myVehicle.items():
 myInventoryList=[]
 
 with open('car_fleet.csv') as csvFile:
-    csvReader=csv.reader(csvFile,delimeter=',')
+    csvReader=csv.reader(csvFile,delimiter=',')
     lineCount=0
     for row in csvReader:
         if lineCount==0:
