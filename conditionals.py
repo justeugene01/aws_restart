@@ -39,4 +39,5 @@ def main():
     print("Thank you, please come again.")
 
 
-main()
+   if __name__ == "__main__":
+       main()
